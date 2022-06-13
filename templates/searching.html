@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Gallery Post Format - Philosophy</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+{#    <link rel="stylesheet" href="../../static/home/css/base.css">#}
+{#    <link rel="stylesheet" href="../../static/home/css/vendor.css">#}
+{#    <link rel="stylesheet" href="../../static/home/css/main.css">#}
+{#    <link rel="stylesheet" href="../../static/home/css/news.css">#}
+{##}
+    <style type="text/css">
+        .container {
+          overflow: hidden;
+        }
+
+        .filterDiv {
+          float: left;
+          background-color: #2196F3;
+          color: #ffffff;
+          width: 100px;
+          line-height: 100px;
+          text-align: center;
+          margin: 2px;
+          display: none; /* Hidden by default */
+        }
+
+        /* The "show" class is added to the filtered elements */
+        .show {
+          display: block;
+        }
+
+        /* Style the buttons */
+        .btn {
+          border: none;
+          outline: none;
+          padding: 3px 16px;
+          background-color: #f1f1f1;
+          cursor: pointer;
+        }
+
+        /* Add a light grey background on mouse-over */
+        .btn:hover {
+          background-color: #ddd;
+        }
+
+        /* Add a dark background to the active button */
+        .btn.active {
+          background-color: #666;
+          color: white;
+        }
+    </style>
+
+    <!-- script
+    ================================================== -->
+    <script src="../../static/home/js/modernizr.js"></script>
+    <script src="../../static/home/js/pace.min.js"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="../static/home/ut.png" type="image/png">
+    <link rel="icon" href="../static/home/ut.png" type="image/png">
+
+</head>
+
+<body id="top">
+
+     <!-- pageheader
+    ================================================== -->
+    <section class="s-pageheader s-pageheader--home">
+
+        <header class="header">
+            <div class="header__content row">
+                <!-- Control buttons -->
+                <div class="md-full end s-footer__subscribe">
+                    <div class="subscribe-form">
+                        <form id="searc" class="group" novalidate="true" >
+                            <input type="hidden" value="article" id="entity_filter" name="entity_filter">
+
+                            <input type="search" value="" name="search" class="email" id="mc-email" placeholder="Key words" required="">
+
+                            <input type="submit" name="subscribe" value="search" style="margin: 0;">
+
+                        </form>
+                    </div>
+                </div>
+                <div id="myBtnContainer">
+                  <button class="btn active" onclick="filterSelection('article')">article</button>
+                  <button class="btn" onclick="filterSelection('terms')">terms</button>
+                  <button class="btn" onclick="filterSelection('subject')">subject</button>
+                  <button class="btn" onclick="filterSelection('author')">author</button>
+                </div>
+
+            </div> <!-- header-content -->
+        </header> <!-- header -->
+	</section> <!-- end s-pageheader -->
+
+
+	<section id="styles" class="s-styles">
+		<div class="row add-bottom">
+			<div class="col-twelve">
+<!-- w2v start -->
+				<div class="table-responsive">
+					<table>
+						<thead>
+                            <th>id</th>
+                            <th>Title [Word2vec]</th>
+                            <th>Score</th>
+                            <th>Title [Doc2vec]</th>
+                            <th>Score</th>
+                            <th>Title [Fasttext]</th>
+                            <th>Score</th>
+                            <th>Title [GloVe]</th>
+                            <th>Score</th>
+                            <th>Title [Ranking]</th>
+                            <th>Score</th>
+						</thead>
+                        <tbody>
+                            {% for five_models in c_list %}
+                                <tr>
+                                    <td>{{ loop.index + pagination.skip }}</td>
+
+                                    {% for model in five_models %}
+                                        <td style="background-color: {{ model.color }}">{{ model.abstract }}</td><td>{{ model.score }}</td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+					</table>
+				</div>
+<!-- w2v start -->
+
+			</div>
+		</div>
+	</section>
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader">
+            <div class="line-scale">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="../../static/home/js/jquery-3.2.1.min.js"></script>
+    <script src="../../static/home/js/plugins.js"></script>
+    <script src="../../static/home/js/main.js"></script>
+    <script type="text/javascript">
+        // Add active class to the current control button (highlight it)
+        var btnContainer = document.getElementById("myBtnContainer");
+        var btns = btnContainer.getElementsByClassName("btn");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function() {
+            var current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
+            this.className += " active";
+          });
+        }
+
+        function filterSelection(c) {
+            var x;
+            x = document.getElementById("entity_filter");
+            x.value = c;
+        }
+    </script>
+
+</body>
+
+</html>
